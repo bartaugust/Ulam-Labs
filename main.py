@@ -34,7 +34,7 @@ def decode(text):
     try:
         _, weird_text, original_words = text.split(separator)
     except ValueError:
-        raise Exception("Error: Text is not valid")
+        raise ValueError('Error: Text is not valid')
     new_text = weird_text
     original_words = original_words.split(' ')
     tokenize_re = re.compile(r'(\w+)', re.U)

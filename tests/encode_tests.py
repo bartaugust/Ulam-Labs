@@ -6,20 +6,38 @@ four_letter_words = [
     ('Word', 'Wrod'),
     ('test', 'tset'),
     ('moje', 'mjoe'),
+    ('4567','4657'),
 ]
 
 sentences = [
     ('This is a long looong test sentence,\n with some big (biiiiig) words!'),
+    ('I don not &62 43 know 7&2@# anything,'),
 ]
 
 no_words = [
     (''),
+    ('$%%%%%%'),
+]
+
+short_words = [
+    ('a'),
+    ('cs'),
+    ('G'),
+    ('sDf'),
+    ('123'),
 ]
 
 @pytest.mark.parametrize('word, expected_word', four_letter_words)
 def test_four_letter_word(word, expected_word):
     assert main.encode(word) == main.separator + expected_word + main.separator + word
 
+@pytest.mark.parametrize('word', short_words)
+def test_short_words(word):
+    assert main.encode(word) == main.separator + word + main.separator
+
+@pytest.mark.parametrize('word', no_words)
+def test_no_words(word):
+    assert main.encode(word) == main.separator + word + main.separator
 
 @pytest.mark.parametrize('sentence', sentences)
 def test_letters_in_words(sentence):
