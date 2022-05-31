@@ -9,6 +9,7 @@ from copy import copy
 app = flask.Flask(__name__)
 separator = '\n-weird-\n'
 
+
 def encode(text):
     tokenize_re = re.compile(r'(\w+)', re.U)
     weird_text = text
@@ -32,8 +33,20 @@ def encode(text):
 
 
 def decode(text):
-
-    return text
+    try:
+        _, weird_text, original_words = text.split(separator)
+    except ValueError:
+        raise Exception("Error: Text is not valid")
+    new_text = weird_text
+    original_words = original_words.split(' ')
+    tokenize_re = re.compile(r'(\w+)', re.U)
+    words = tokenize_re.findall(text)
+    for original_word in original_words:
+        for word in words:
+            if sorted(original_word) == sorted(word) and len(original_word) == len(word):
+                new_text = new_text.replace(word, original_word, 1)
+                break
+    return new_text
 
 
 @app.get("/")
@@ -56,6 +69,10 @@ def decode_endpoint():
 
 if __name__ == "__main__":
     sample_text = 'This is a long looong test sentence,\nwith some big (biiiiig) words!'
+    encoded_text = encode(sample_text)
+    decoded_text = decode(encoded_text)
+    print(encoded_text)
+    print(decoded_text)
     # Used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. This
     # can be configured by adding an `entrypoint` to app.yaml.
