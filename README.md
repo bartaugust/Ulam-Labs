@@ -5,9 +5,9 @@ API was built using Google App Engine.
 ## Updates
 In order to apply changes from Github you need to download repository.
 Using gcloud CLI terminal in projects working directory write command
-'''
+```
 gcloud app deploy
-'''
+```
 
 ## URL
 https://ulam-labs.lm.r.appspot.com/
