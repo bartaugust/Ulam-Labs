@@ -3,8 +3,8 @@
 ## URL
 https://ulam-labs.lm.r.appspot.com/
 
-##Home Page
+## Home Page
 
-##Encode Page
+## Encode Page
 
-##Decode Page
+## Decode Page
