@@ -8,7 +8,10 @@ Using gcloud CLI terminal in projects working directory write command
 ```
 gcloud app deploy
 ```
-
+Only works after correct login using 
+```
+gcloud init
+```
 ## URL
 https://ulam-labs.lm.r.appspot.com/
 
