@@ -1,8 +1,6 @@
 import flask
-from wtforms import StringField
 import re
 import random
-from copy import copy
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
@@ -51,24 +49,27 @@ def decode(text):
 
 @app.get("/")
 def home():
-    # text = StringField('text')
     return flask.render_template('home_layout.html')
 
 
 @app.route("/v1/encode", methods=['POST'])
 def encode_endpoint():
     text = flask.request.form['text']
-    return encode(text)
+    encoded_text = encode(text)
+    encoded_text = encoded_text.replace("\n", "\\n")
+    return flask.render_template('encode_layout.html', weird_text=encoded_text)
 
 
 @app.route("/v1/decode", methods=['POST'])
 def decode_endpoint():
-    text = flask.request.form['text']
-    return decode(text)
+    text = flask.request.form['weird_text']
+    text = text.replace("\\n", "\n")
+    decoded_text = decode(text)
+    return flask.render_template('decode_layout.html', decoded_text=decoded_text)
 
 
 if __name__ == "__main__":
-    sample_text = 'This is a long looong test sentence,\nwith some big (biiiiig) words!'
+    sample_text = 'This is a long looong test sentence,\n with some big (biiiiig) words!'
     encoded_text = encode(sample_text)
     decoded_text = decode(encoded_text)
     print(encoded_text)
